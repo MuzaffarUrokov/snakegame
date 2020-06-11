@@ -10,10 +10,16 @@ const box = 30;
 const ground = new Image();
 ground.src = 'img/ground.jpeg';
 
+const ground2 = new Image();
+ground2.src = 'img/ground2.jpeg';
+
+const ground3 = new Image();
+ground3.src = 'img/ground3.jpg';
+
+
+
 const foodImg = new Image();
 foodImg.src = 'img/food.png';
-foodImg.width = 10;
-foodImg.height = 10;
 //load audio
 const eat = new Audio();	
    eat.src = 'audio/pureskelu.mp3';
@@ -66,7 +72,11 @@ function direction(event){
 //draw everything to the canvas
 
 function draw(){
-	ctx.drawImage(ground,0,0,608,608);
+	if(score<8){
+	ctx.drawImage(ground,0,0,1400,1000);}
+	  else{
+        ctx.drawImage(ground2,0,0,1400,1000);
+	  }
 	for( let i=0; i<snake.length; i++ ){
 		ctx.fillStyle = i ==0 ? 'green' : 'white';
 		ctx.fillRect(snake[i].x, snake[i].y, box, box);
@@ -81,6 +91,10 @@ function draw(){
 	if(snakeX == food.x && snakeY == food.y){
 		score++;
 		eat.play();
+
+		if(score>5){
+			ctx.drawImage(ground2,0,0,500,500);
+		}
 		
 		food = {
 			x : Math.floor(Math.random() * 17 +1 ) * box,
@@ -110,7 +124,7 @@ function draw(){
 		return false;
 	}
 	//game over
-	if(snakeX < 0 || snakeX > 600 || snakeY < 0 || snakeY > 600 || collision(newHead, snake)){
+	if(snakeX < 0 || snakeX > 1400 || snakeY < 0 || snakeY > 590 || collision(newHead, snake)){
 		clearInterval(game);
 		over.play();
 	}	
